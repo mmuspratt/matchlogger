@@ -1,0 +1,170 @@
+/* Basic reset for some elements */
+body, h1, div, button {
+    margin: 0;
+    padding: 0;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background-color: whitesmoke;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100vh;
+}
+
+.container {
+    width: 90%;  /* Give some space from the edges */
+    max-width: 340px;  /* Set max-width to match the width of the vertical pitch */
+    text-align: center;
+    padding: 20px;
+    background-color: darkgreen;
+    border-radius: 10px;
+    box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Add a subtle shadow */
+}
+
+h1 {
+    color: whitesmoke;
+    margin-bottom: 20px; /* Space below the heading */
+}
+
+.version {
+    font-size: 40%;        /* Reduce the font size */
+    float: right;          /* Position it to the right */
+    margin-top: -15px;     /* Move it slightly up for better alignment */
+    font-weight: normal;   /* Make it unbold */
+    color: green;           /* Change color to a light gray, you can adjust this as needed */
+}
+
+.pitch {
+    position: relative;
+    width: 100%; 
+    padding-top: 154.41%;  /* For a 68:105 aspect ratio */
+    background-image: url('pitch_vertical_mm.jpg');
+    background-size: cover;
+    background-repeat: no-repeat;
+    background-position: center;
+    border: 0px solid black;
+    border-radius: 5px;
+    margin-bottom: 20px;
+    box-sizing: border-box;  /* Ensures padding doesn't expand the box */
+}
+
+.event-marker {
+    position: absolute;
+    width: 8px;
+    height: 8px;
+    background-color: red;
+    border-radius: 50%;
+    transform: translate(-50%, -50%);
+}
+
+.category-popup {
+    position: absolute;
+    display: none;
+    background-color: rgba(245, 245, 245, 0.5); /* whitesmoke with x% opacity */
+    border: 1px solid rgba(0, 0, 0, 0.25); /* #ccc with x% opacity */
+    padding: 30px 20px;
+    border-radius: 5px;
+    box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    z-index: 10;
+    width: 80%;  /* Adjusted width */
+    max-width: 340px;  /* Ensures it doesn't get too wide on larger screens */
+}
+
+/* Media query for screens smaller than or equal to 768px */
+@media (max-width: 768px) {
+    .category-popup {
+        width: 100%;  /* Make it full width on small screens */
+        box-sizing: border-box;  /* Ensures padding doesn't expand the box */
+        padding: 20px;  /* Add some padding */
+        max-height: 70vh;  /* Adjust the height */
+        overflow-y: auto;  /* Add scroll if content is too tall */
+    }
+}
+
+.category-popup button {
+    margin: 5px;
+    padding: 5px 10px;
+    opacity: 0.75; /* x% opacity */
+    border-radius: 10px; /* Set a border-radius */
+    border: none; /* Remove border for a flat look */
+    box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add drop shadow */
+}
+
+.row-heading {
+    font-weight: bold;
+    margin-bottom: 1px;
+    font-size: 12px; 
+    color: rgba(100, 100, 100, 1.0);
+}
+
+.button-row {
+    margin-bottom: 5px;
+}
+
+.button-row button {
+    margin-right: 5px;
+}
+
+/* This ensures the last button in each row doesn't have extra margin on the right */
+.button-row button:last-child {
+    margin-right: 0;
+}
+
+.positive {
+    background-color: darkgreen; /* Bootstrap green for positive */
+    color: white;
+    border-radius: 10px; /* Ensure rounded edges */
+}
+
+.neutral {
+    background-color: #6c757d; /* Bootstrap gray for neutral */
+    color: white;
+    border-radius: 4px; /* Ensure rounded edges */
+}
+
+.negative {
+    background-color: #dc3545; /* Bootstrap red for negative */
+    color: white;
+    border-radius: 4px; /* Ensure rounded edges */
+}
+
+.button-clicked {
+    background-color: #ccc !important; /* Change to a different color */
+    transition: background-color 0.1s; /* Quick transition for instant feedback */
+}
+
+.action-button-export, .action-button-reset, .action-button-undo {
+    background-color: #4CAF50;
+    color: whitesmoke;
+    border: none;
+    padding: 5px 15px;
+    margin: 5px;
+    cursor: pointer;
+    border-radius: 5px;
+    transition: background-color 0.3s;
+}
+
+.action-button-undo:hover {
+    background-color: #FFC107; /* Slightly darker yellow on hover */
+}
+
+.action-button-export:hover {
+    background-color: #45a049; /* Slightly darker on hover */
+}
+
+.action-button-undo {
+    background-color: darkorange;
+}
+
+.action-button-reset {
+    background-color: #f44336; /* Red for reset button */
+}
+
+.action-button-reset:hover {
+    background-color: #da190b; /* Slightly darker red on hover */
+}
