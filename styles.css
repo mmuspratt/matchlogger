@@ -62,9 +62,9 @@ h1 {
 .category-popup {
     position: absolute;
     display: none;
-    background-color: rgba(245, 245, 245, 0.5); /* whitesmoke with x% opacity */
+    background-color: rgba(245, 245, 245, 0.75); /* whitesmoke with x% opacity */
     border: 1px solid rgba(0, 0, 0, 0.25); /* #ccc with x% opacity */
-    padding: 30px 20px;
+    padding: 10px 10px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     top: 50%;
@@ -86,6 +86,13 @@ h1 {
     }
 }
 
+.row-heading {
+    font-weight: bold;
+    margin-bottom: 1px;
+    font-size: 12px; 
+    color: rgba(100, 100, 100, 1.0);
+}
+
 .category-popup button {
     margin: 5px;
     padding: 5px 10px;
@@ -95,19 +102,12 @@ h1 {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add drop shadow */
 }
 
-.row-heading {
-    font-weight: bold;
-    margin-bottom: 1px;
-    font-size: 12px; 
-    color: rgba(100, 100, 100, 1.0);
-}
-
 .button-row {
-    margin-bottom: 5px;
+    margin-bottom: 1px;
 }
 
 .button-row button {
-    margin-right: 5px;
+    margin-right: 1px;
 }
 
 /* This ensures the last button in each row doesn't have extra margin on the right */
@@ -131,6 +131,10 @@ h1 {
     background-color: #dc3545; /* Bootstrap red for negative */
     color: white;
     border-radius: 4px; /* Ensure rounded edges */
+}
+
+.category-popup button.button-large {
+    padding: 15px 15px;
 }
 
 .button-clicked {

@@ -1,11 +1,13 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=no">
     <title>Match Logger (mmuspratt)</title>
     <link rel="stylesheet" href="styles.css">
 </head>
+
 <body>
     <div class="container">
         
@@ -20,69 +22,75 @@
         <button class="action-button-undo" onclick="undoLastEvent()">Undo event</button>
         
         <div class="category-popup" id="categoryPopup">
+            
             <div class="button-row">
-                <div class="row-heading">First touch</div>
-                <button class="positive" onclick="selectCategory('Ball Receipt'); handleButtonClick(this)">Ball Receipt</button>
-                <button class="positive" onclick="selectCategory('Interception'); handleButtonClick(this)">Interception</button>
-                <button class="positive" onclick="selectCategory('Duel'); handleButtonClick(this)">Duel</button>
-            </div>
-            <div class="button-row">
-                <div class="row-heading">Possession</div>
-                <button class="positive" onclick="selectCategory('Carry'); handleButtonClick(this)">Carry</button>
-                <button class="positive" onclick="selectCategory('Dribble'); handleButtonClick(this)">Dribble</button>
-                <button class="negative" onclick="selectCategory('Miscontrol'); handleButtonClick(this)">Miscontrol</button>
-                <button class="negative" onclick="selectCategory('Dispossessed'); handleButtonClick(this)">Dispossessed</button>
+                <div class="row-heading">FIRST TOUCH</div>
+                <button class="positive button-large" onclick="selectCategory('Control'); handleButtonClick(this)">Control</button>
+                <button class="negative button-large" onclick="selectCategory('Miscontrol'); handleButtonClick(this)">Miscontrol</button>
+                <button class="neutral button-large" onclick="selectCategory('Duel'); handleButtonClick(this)">Duel</button>
             </div>
             
             <div class="button-row">
-                <div class="row-heading">Last touch</div>
-                <button class="positive" onclick="selectCategory('Pass'); handleButtonClick(this)">Pass</button>
-                <button class="positive" onclick="selectCategory('Shot'); handleButtonClick(this)">Shot</button>
-                <button class="positive" onclick="selectCategory('Goal'); handleButtonClick(this)">Goal</button>
-                <button class="negative" onclick="selectCategory('Pass Incomplete'); handleButtonClick(this)">Pass-incomplete</button>
+                <div class="row-heading">POSSESSION</div>
+                <button class="positive button-large" onclick="selectCategory('Possess'); handleButtonClick(this)">Possess</button>
+                <button class="negative button-large" onclick="selectCategory('Dispossessed'); handleButtonClick(this)">Dispossessed</button>
+            </div>
+            
+            <div class="button-row">
+                <div class="row-heading">LAST TOUCH</div>
+                <button class="positive button-large" onclick="selectCategory('Pass'); handleButtonClick(this)">Pass</button>
+                <button class="negative button-large" onclick="selectCategory('Pass incomplete'); handleButtonClick(this)">Pass incomplete</button>
+                <button class="positive button-large" onclick="selectCategory('Shot'); handleButtonClick(this)">Shot</button>
             </div>
 
             <div class="button-row">
-                <div class="row-heading">Defensive actions</div>
-                <button class="positive" onclick="selectCategory('Pressure'); handleButtonClick(this)">Pressure</button>
-                <button class="positive" onclick="selectCategory('Tackle'); handleButtonClick(this)">Tackle</button>
-                <button class="positive" onclick="selectCategory('Clearance'); handleButtonClick(this)">Clearance</button>
-                <button class="negative" onclick="selectCategory('Dribble-Past'); handleButtonClick(this)">Dribble-Past</button>
-            </div>
-            <div class="button-row">
-                <button class="positive" onclick="selectCategory('GK Save'); handleButtonClick(this)">GK save</button>
-                <button class="negative" onclick="selectCategory('GK Concede'); handleButtonClick(this)">GK concede</button>
+                <div class="row-heading">DEFENSE</div>
+                <button class="positive button-large" onclick="selectCategory('Contain'); handleButtonClick(this)">Contain</button>
+                <button class="negative button-large" onclick="selectCategory('Dribble-past'); handleButtonClick(this)">Dribble-past</button>
             </div>
             
             <div class="button-row">
-                <div class="row-heading">Other</div>
+                <div class="row-heading">OTHER</div>
+                <button class="positive" onclick="selectCategory('GK save'); handleButtonClick(this)">GK save</button>
+                <button class="negative" onclick="selectCategory('GK concede'); handleButtonClick(this)">GK concede</button>
+                <button class="neutral" onclick="selectCategory('Other'); handleButtonClick(this)">OTHER</button>
+            </div>
+
+            <div class="button-row">
                 <button class="neutral" onclick="selectCategory('Foul'); handleButtonClick(this)">Foul</button>
                 <button class="neutral" onclick="selectCategory('Fouled'); handleButtonClick(this)">Fouled</button>
                 <button class="negative" onclick="selectCategory('Offside'); handleButtonClick(this)">Offside</button>
-                <button class="neutral" onclick="selectCategory('other'); handleButtonClick(this)">OTHER</button>
+                <button class="positive" onclick="selectCategory('Goal'); handleButtonClick(this)">Goal</button>
             </div>
+            
             <div class="button-row">
                 <button onclick="selectCategory('Enter ST'); handleButtonClick(this)">Enter ST</button>
             </div>
+            
             <div class="button-row">
                 <button onclick="selectCategory('Enter LM'); handleButtonClick(this)">Enter LM</button>
                 <button onclick="selectCategory('Enter CM'); handleButtonClick(this)">Enter CM</button>
                 <button onclick="selectCategory('Enter RM'); handleButtonClick(this)">Enter RM</button>
             </div>
+            
             <div class="button-row">
                 <button onclick="selectCategory('Enter LD'); handleButtonClick(this)">Enter LD</button>
                 <button onclick="selectCategory('Enter RD'); handleButtonClick(this)">Enter RD</button>
             </div>
+            
             <div class="button-row">
                 <button onclick="selectCategory('Enter GK'); handleButtonClick(this)">Enter GK</button>
             </div>
+            
             <div class="button-row">
                 <button onclick="selectCategory('Subbed Off'); handleButtonClick(this)">Subbed Off</button>
             </div>
+        
         </div>
 
-
     </div>
+
     <script src="script.js"></script>
 </body>
+
 </html>
