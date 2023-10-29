@@ -1,9 +1,10 @@
-/* Basic reset for some elements */
+/* Basic reset for some elements to remove default browser styling */
 body, h1, div, button {
     margin: 0;
     padding: 0;
 }
 
+/* Set a global font, background color, and centering for the entire page */
 body {
     font-family: Arial, sans-serif;
     background-color: whitesmoke;
@@ -13,6 +14,7 @@ body {
     height: 100vh;
 }
 
+/* Style the main container of the app */
 .container {
     width: 90%;  /* Give some space from the edges */
     max-width: 340px;  /* Set max-width to match the width of the vertical pitch */
@@ -23,11 +25,13 @@ body {
     box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Add a subtle shadow */
 }
 
+/* Style the main heading of the app */
 h1 {
     color: whitesmoke;
     margin-bottom: 20px; /* Space below the heading */
 }
 
+/* Style for version information, positioned to the top-right */
 .version {
     font-size: 40%;        /* Reduce the font size */
     float: right;          /* Position it to the right */
@@ -36,6 +40,7 @@ h1 {
     color: green;           /* Change color to a light gray, you can adjust this as needed */
 }
 
+/* Style the pitch area of the app */
 .pitch {
     position: relative;
     width: 100%; 
@@ -50,6 +55,7 @@ h1 {
     box-sizing: border-box;  /* Ensures padding doesn't expand the box */
 }
 
+/* Style for event markers on the pitch */
 .event-marker {
     position: absolute;
     width: 8px;
@@ -59,6 +65,7 @@ h1 {
     transform: translate(-50%, -50%);
 }
 
+/* Style for the category selection popup */
 .category-popup {
     position: absolute;
     display: none;
@@ -86,6 +93,7 @@ h1 {
     }
 }
 
+/* Style for row headings in the category selection popup */
 .row-heading {
     font-weight: bold;
     margin-bottom: 1px;
@@ -93,6 +101,7 @@ h1 {
     color: rgba(100, 100, 100, 1.0);
 }
 
+/* Style for buttons in the category selection popup */
 .category-popup button {
     margin: 5px;
     padding: 5px 10px;
@@ -102,46 +111,64 @@ h1 {
     box-shadow: 0px 2px 4px rgba(0, 0, 0, 0.2); /* Add drop shadow */
 }
 
+/* Style for button rows in the category selection popup */
 .button-row {
     margin-bottom: 1px;
 }
 
+/* Style for buttons inside button rows */
 .button-row button {
     margin-right: 1px;
 }
 
-/* This ensures the last button in each row doesn't have extra margin on the right */
+/* Remove right margin for the last button in a button row */
 .button-row button:last-child {
     margin-right: 0;
 }
 
+/* Additional style for positive buttons */
 .positive {
     background-color: darkgreen; /* Bootstrap green for positive */
     color: white;
     border-radius: 10px; /* Ensure rounded edges */
 }
 
+/* Additional style for neutral buttons */
 .neutral {
     background-color: #6c757d; /* Bootstrap gray for neutral */
     color: white;
     border-radius: 4px; /* Ensure rounded edges */
 }
 
+/* Additional style for negative buttons */
 .negative {
     background-color: #dc3545; /* Bootstrap red for negative */
     color: white;
     border-radius: 4px; /* Ensure rounded edges */
 }
 
+/* Additional style for standard buttons */
+.category-popup button.button-standard {
+    padding: 5px 10px;
+}
+
+/* Additional style for larger buttons */
 .category-popup button.button-large {
     padding: 15px 15px;
 }
 
+/* Additional style for small buttons */
+.category-popup button.button-small {
+    padding: 2.5px 10px;
+}
+
+/* Style for buttons when clicked */
 .button-clicked {
     background-color: #ccc !important; /* Change to a different color */
     transition: background-color 0.1s; /* Quick transition for instant feedback */
 }
 
+/* Style for export, reset, and undo action buttons */
 .action-button-export, .action-button-reset, .action-button-undo {
     background-color: #4CAF50;
     color: whitesmoke;
@@ -153,22 +180,27 @@ h1 {
     transition: background-color 0.3s;
 }
 
+/* Hover effect for undo button */
 .action-button-undo:hover {
     background-color: #FFC107; /* Slightly darker yellow on hover */
 }
 
+/* Hover effect for export button */
 .action-button-export:hover {
     background-color: #45a049; /* Slightly darker on hover */
 }
 
+/* Specific style for undo button */
 .action-button-undo {
     background-color: darkorange;
 }
 
+/* Specific style for reset button */
 .action-button-reset {
     background-color: #f44336; /* Red for reset button */
 }
 
+/* Hover effect for reset button */
 .action-button-reset:hover {
     background-color: #da190b; /* Slightly darker red on hover */
 }
