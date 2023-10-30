@@ -71,7 +71,7 @@ h1 {
     display: none;
     background-color: rgba(245, 245, 245, 0.75); /* whitesmoke with x% opacity */
     border: 1px solid rgba(0, 0, 0, 0.25); /* #ccc with x% opacity */
-    padding: 10px 10px;
+    padding: 80px 10px;
     border-radius: 5px;
     box-shadow: 0px 0px 10px rgba(0,0,0,0.1);
     top: 50%;
@@ -135,14 +135,14 @@ h1 {
 
 /* Additional style for neutral buttons */
 .neutral {
-    background-color: #6c757d; /* Bootstrap gray for neutral */
+    background-color: darkgoldenrod; /* Bootstrap gray for neutral */
     color: white;
     border-radius: 4px; /* Ensure rounded edges */
 }
 
 /* Additional style for negative buttons */
 .negative {
-    background-color: #dc3545; /* Bootstrap red for negative */
+    background-color: darkred; /* Bootstrap red for negative */
     color: white;
     border-radius: 4px; /* Ensure rounded edges */
 }
