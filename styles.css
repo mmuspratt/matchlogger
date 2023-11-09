@@ -39,6 +39,13 @@ h1 {
     font-weight: normal;   /* Make it unbold */
     color: green;           /* Change color to a light gray, you can adjust this as needed */
 }
+.version a:link, /* unvisited links */
+.version a:visited, /* visited links */
+.version a:hover, /* user hovers */
+.version a:active /* active links */ {
+    color: green; /* Use the same green color */
+    text-decoration: none; /* Optional: Removes the underline from links */
+}
 
 /* Style the pitch area of the app */
 .pitch {
