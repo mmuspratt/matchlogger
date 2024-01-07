@@ -20,31 +20,15 @@ body {
     max-width: 340px;  /* Set max-width to match the width of the vertical pitch */
     text-align: center;
     padding: 20px;
-    background-color: darkgreen;
+    background-color: whitesmoke;
     border-radius: 10px;
     box-shadow: 0px 0px 15px rgba(0,0,0,0.1); /* Add a subtle shadow */
 }
 
 /* Style the main heading of the app */
 h1 {
-    color: whitesmoke;
+    color: darkslategray;
     margin-bottom: 20px; /* Space below the heading */
-}
-
-/* Style for version information, positioned to the top-right */
-.version {
-    font-size: 40%;        /* Reduce the font size */
-    float: right;          /* Position it to the right */
-    margin-top: -15px;     /* Move it slightly up for better alignment */
-    font-weight: normal;   /* Make it unbold */
-    color: green;           /* Change color to a light gray, you can adjust this as needed */
-}
-.version a:link, /* unvisited links */
-.version a:visited, /* visited links */
-.version a:hover, /* user hovers */
-.version a:active /* active links */ {
-    color: green; /* Use the same green color */
-    text-decoration: none; /* Optional: Removes the underline from links */
 }
 
 /* Style the pitch area of the app */
@@ -52,7 +36,7 @@ h1 {
     position: relative;
     width: 100%; 
     padding-top: 154.41%;  /* For a 68:105 aspect ratio */
-    background-image: url('pitch_vertical_mm.jpg');
+    background-image: url('pitch_diagram.jpg');
     background-size: cover;
     background-repeat: no-repeat;
     background-position: center;
@@ -177,7 +161,7 @@ h1 {
 
 /* Style for export, reset, and undo action buttons */
 .action-button-export, .action-button-reset, .action-button-undo {
-    background-color: #4CAF50;
+    background-color: green;
     color: whitesmoke;
     border: none;
     padding: 5px 15px;
@@ -204,10 +188,10 @@ h1 {
 
 /* Specific style for reset button */
 .action-button-reset {
-    background-color: #f44336; /* Red for reset button */
+    background-color: #da190b; /* Red for reset button */
 }
 
 /* Hover effect for reset button */
 .action-button-reset:hover {
-    background-color: #da190b; /* Slightly darker red on hover */
+    background-color: #f44336; /* Slightly darker red on hover */
 }

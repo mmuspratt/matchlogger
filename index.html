@@ -11,7 +11,7 @@
 <body>
     <div class="container">
         
-        <h1>Match Logger <span class="version"><a href="https://mmuspratt.com" target="_blank">mmuspratt.com</a> - v03</span></h1>
+        <h1>Match Logger</h1>
         
         <div class="pitch" onclick="recordEvent(event)">
             <!-- Displayed markers will be dynamically added here -->
@@ -64,9 +64,9 @@
             </div>
             
             <div class="button-row">
-                <button class="button-small" onclick="selectCategory('Enter LW'); handleButtonClick(this)">Enter LW</button>
+                <button class="button-small" onclick="selectCategory('Enter LF'); handleButtonClick(this)">Enter LF</button>
                 <button class="button-small" onclick="selectCategory('Enter ST'); handleButtonClick(this)">Enter ST</button>
-                <button class="button-small" onclick="selectCategory('Enter RW'); handleButtonClick(this)">Enter RW</button>
+                <button class="button-small" onclick="selectCategory('Enter RF'); handleButtonClick(this)">Enter RF</button>
             </div>
             
             <div class="button-row">
@@ -76,17 +76,15 @@
             </div>
             
             <div class="button-row">
-                <button class="button-small" onclick="selectCategory('Enter LD'); handleButtonClick(this)">Enter LD</button>
-                <button class="button-small" onclick="selectCategory('Enter CD'); handleButtonClick(this)">Enter CD</button>
-                <button class="button-small" onclick="selectCategory('Enter RD'); handleButtonClick(this)">Enter RD</button>
+                <button class="button-small" onclick="selectCategory('Enter LB'); handleButtonClick(this)">Enter LB</button>
+                <button class="button-small" onclick="selectCategory('Enter CB'); handleButtonClick(this)">Enter CB</button>
+                <button class="button-small" onclick="selectCategory('Enter RB'); handleButtonClick(this)">Enter RB</button>
             </div>
             
             <div class="button-row">
+                <button class="button-small" onclick="selectCategory('Enter SW'); handleButtonClick(this)">Enter SW</button>
                 <button class="button-small" onclick="selectCategory('Enter GK'); handleButtonClick(this)">Enter GK</button>
-            </div>
-            
-            <div class="button-row">
-                <button class="button-small" onclick="selectCategory('Subbed off'); handleButtonClick(this)">Subbed off</button>
+                <button class="button-small" onclick="selectCategory('Subbed off'); handleButtonClick(this)">SUBBED OFF</button>
             </div>
         
         </div>
