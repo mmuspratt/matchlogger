@@ -28,7 +28,33 @@ body {
 /* Style the main heading of the app */
 h1 {
     color: darkslategray;
-    margin-bottom: 20px; /* Space below the heading */
+    font-family: Arial, sans-serif;  /* Set the font to Arial */
+    font-size: 22px;                /* Smaller font size, adjust as needed */
+    font-weight: bold;              /* Make the font bold */
+    margin-bottom: 1px;            /* Less space below the heading */
+    padding: 0px 0;                 /* Reduced padding, adjust as needed */
+}
+
+/* Style the container */
+.checkbox-container {
+    background-color: darkslategray; /* Set the background to white */
+    color: whitesmoke;
+    padding: 0px 15px;          /* Add some padding inside the box */
+    margin-bottom: 5px;    /* Add space below the container */
+    display: flex;  /* Make the container fit its content */
+    align-items: center;
+    justify-content: center;
+    border: none;
+    border-radius: 5px;
+}
+
+/* Style the label text */
+label[for="toggle-event-types"] {
+    color: whitesmoke;
+    font-family: Arial, sans-serif;
+    font-size: 12px;
+    /*font-weight: bold; */
+    cursor: pointer;
 }
 
 /* Style the pitch area of the app */
@@ -41,8 +67,8 @@ h1 {
     background-repeat: no-repeat;
     background-position: center;
     border: 0px solid black;
-    border-radius: 5px;
-    margin-bottom: 20px;
+    border-radius: 1px;
+    margin-bottom: 5px;
     box-sizing: border-box;  /* Ensures padding doesn't expand the box */
 }
 
@@ -165,7 +191,7 @@ h1 {
     color: whitesmoke;
     border: none;
     padding: 5px 15px;
-    margin: 5px;
+    margin: 2px;
     cursor: pointer;
     border-radius: 5px;
     transition: background-color 0.3s;

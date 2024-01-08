@@ -25,9 +25,17 @@ function recordEvent(event) {
 
     event.target.appendChild(marker);
     
-    // Show category selection popup in the center of the pitch
-    const categoryPopup = document.getElementById('categoryPopup');
-    categoryPopup.style.display = 'block';
+    // Check if the toggle for event categorization is on or off
+    const isCategorizationEnabled = document.getElementById('toggle-event-types').checked;
+
+    // Show category selection popup only if categorization is enabled
+    if (isCategorizationEnabled) {
+        const categoryPopup = document.getElementById('categoryPopup');
+        categoryPopup.style.display = 'block';
+    } else {
+        // Add a default category or no category if categorization is not enabled
+        events[events.length - 1].push('Uncategorized');
+    }
 }
 
 function handleButtonClick(button) {
@@ -35,6 +43,13 @@ function handleButtonClick(button) {
     setTimeout(() => {
         button.classList.remove('button-clicked');
     }, 100); // Remove the class after 100 milliseconds
+}
+
+function startLogging(logEventTypes) {
+  // Save the choice in localStorage or pass as a query parameter
+  localStorage.setItem('logEventTypes', logEventTypes);
+  // Redirect to logging page
+  window.location.href = 'logging.html';
 }
 
 function selectCategory(category) {
