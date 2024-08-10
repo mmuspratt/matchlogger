@@ -15,9 +15,24 @@
             padding: 10px;
             background-color: #f0f0f0;
             border-radius: 5px;
-            cursor: pointer;
         }
         .player.active {
+            background-color: #a0d0a0;
+        }
+        .player-label {
+            display: inline-block;
+            width: 50px;
+            font-weight: bold;
+        }
+        .clock {
+            display: inline-block;
+            padding: 10px;
+            background-color: #e0e0e0;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        .clock.active {
             background-color: #a0d0a0;
         }
         #export-button, #stop-all-button, #reset-button {
@@ -38,13 +53,23 @@
         }
         #reset-button {
             background-color: #FFC107;
-            color: black; /* Use black text color for better contrast on orange */
+            color: black;
+        }
+        #active-clocks-counter {
+            margin-bottom: 20px;
+            font-size: 18px;
+            font-weight: bold;
+        }
+        #active-clocks-count {
+            color: red;
         }
     </style>
 </head>
 <body>
 
     <h1>PlayingTimeLogger</h1>
+
+    <div id="active-clocks-counter">Active Clocks: <span id="active-clocks-count">0</span></div>
 
     <div id="players">
         <!-- Players will be added here dynamically -->
@@ -55,62 +80,82 @@
     <button id="reset-button" onclick="resetClocks()">Reset Clocks</button>
 
     <script>
+        const positions = ['GK', 'D', 'M', 'F'];
         const players = [
-            { name: 'Charlie', time: 0, start: null, interval: null },
-            { name: 'Colby', time: 0, start: null, interval: null },
-            { name: 'Davin', time: 0, start: null, interval: null },
-            { name: 'Elliot', time: 0, start: null, interval: null },
-            { name: 'Emory', time: 0, start: null, interval: null },
-            { name: 'Eske', time: 0, start: null, interval: null },
-            { name: 'Finn', time: 0, start: null, interval: null },
-            { name: 'Ivar', time: 0, start: null, interval: null },
-            { name: 'Leo', time: 0, start: null, interval: null },
-            { name: 'Lucas', time: 0, start: null, interval: null },
-            { name: 'Matthew', time: 0, start: null, interval: null },
-            { name: 'Noah', time: 0, start: null, interval: null },
-            { name: 'Weston', time: 0, start: null, interval: null }
+            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
+            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} }
         ];
 
+        let activeClocks = 0;
+        const activeClocksCounter = document.getElementById('active-clocks-counter');
+        const activeClocksCount = document.getElementById('active-clocks-count');
         const container = document.getElementById('players');
 
         players.forEach((player, index) => {
-            const playerDiv = document.createElement('div');
-            playerDiv.className = 'player';
-            playerDiv.id = `player-${index}`;
-            playerDiv.innerText = `${player.name} - Time: 00:00`;
-            playerDiv.addEventListener('click', () => toggleTimer(index));
-            container.appendChild(playerDiv);
+            const playerRow = document.createElement('div');
+            playerRow.className = 'player';
+            playerRow.id = `player-${index}`;
+
+            const playerLabel = document.createElement('span');
+            playerLabel.className = 'player-label';
+            playerLabel.innerText = player.name;
+            playerRow.appendChild(playerLabel);
+
+            positions.forEach(position => {
+                const clockDiv = document.createElement('div');
+                clockDiv.className = 'clock';
+                clockDiv.id = `clock-${index}-${position}`;
+                clockDiv.innerText = `${position}: 00:00`;
+                clockDiv.addEventListener('click', () => toggleTimer(index, position));
+                playerRow.appendChild(clockDiv);
+            });
+
+            container.appendChild(playerRow);
         });
 
-        function toggleTimer(index) {
-            const player = players[index];
-            const playerDiv = document.getElementById(`player-${index}`);
+        function toggleTimer(playerIndex, position) {
+            const player = players[playerIndex];
+            const clockDiv = document.getElementById(`clock-${playerIndex}-${position}`);
 
-            if (player.start === null) {
+            if (!player.intervals[position]) {
                 // Start the timer
-                player.start = Date.now();
-                playerDiv.classList.add('active');
-                player.interval = setInterval(() => updateDisplay(index), 100);
+                player.intervals[position] = setInterval(() => updateDisplay(playerIndex, position), 100);
+                player.clocks[position] = Date.now();
+                clockDiv.classList.add('active');
+                activeClocks++;
             } else {
                 // Stop the timer
-                clearInterval(player.interval);
-                player.time += (Date.now() - player.start) / 1000;
-                player.start = null;
-                playerDiv.classList.remove('active');
-                playerDiv.innerText = `${player.name} - Time: ${formatTime(player.time)}`;
+                clearInterval(player.intervals[position]);
+                player.intervals[position] = null;
+                player.clocks[position] = (Date.now() - player.clocks[position]) / 1000;
+                clockDiv.classList.remove('active');
+                clockDiv.innerText = `${position}: ${formatTime(player.clocks[position])}`;
+                activeClocks--;
             }
+            updateActiveClocksCounter();
         }
 
-        function updateDisplay(index) {
-            const player = players[index];
-            const playerDiv = document.getElementById(`player-${index}`);
-            let elapsedTime = player.time;
+        function updateDisplay(playerIndex, position) {
+            const player = players[playerIndex];
+            const clockDiv = document.getElementById(`clock-${playerIndex}-${position}`);
+            let elapsedTime = player.clocks[position];
 
-            if (player.start !== null) {
-                elapsedTime += (Date.now() - player.start) / 1000;
+            if (player.intervals[position]) {
+                elapsedTime = (Date.now() - elapsedTime) / 1000;
             }
 
-            playerDiv.innerText = `${player.name} - Time: ${formatTime(elapsedTime)}`;
+            clockDiv.innerText = `${position}: ${formatTime(elapsedTime)}`;
         }
 
         function formatTime(seconds) {
@@ -125,12 +170,14 @@
 
         function exportTimes() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Player,Time (MM:SS),Time (Minutes)\n";
+            csvContent += "Player,Position,Time (MM:SS),Time (Minutes)\n";
 
             players.forEach(player => {
-                const timeFormatted = formatTime(player.time);
-                const timeDecimal = timeInDecimalMinutes(player.time);
-                csvContent += `${player.name},${timeFormatted},${timeDecimal}\n`;
+                positions.forEach(position => {
+                    const timeFormatted = formatTime(player.clocks[position]);
+                    const timeDecimal = timeInDecimalMinutes(player.clocks[position]);
+                    csvContent += `${player.name},${position},${timeFormatted},${timeDecimal}\n`;
+                });
             });
 
             const now = new Date();
@@ -152,26 +199,43 @@
 
         function resetClocks() {
             players.forEach((player, index) => {
-                clearInterval(player.interval);
-                player.time = 0;
-                player.start = null;
-                const playerDiv = document.getElementById(`player-${index}`);
-                playerDiv.innerText = `${player.name} - Time: 00:00`;
-                playerDiv.classList.remove('active');
+                positions.forEach(position => {
+                    clearInterval(player.intervals[position]);
+                    player.clocks[position] = 0;
+                    player.intervals[position] = null;
+                    const clockDiv = document.getElementById(`clock-${index}-${position}`);
+                    clockDiv.innerText = `${position}: 00:00`;
+                    clockDiv.classList.remove('active');
+                });
             });
+            activeClocks = 0;
+            updateActiveClocksCounter();
         }
 
         function stopAllClocks() {
             players.forEach((player, index) => {
-                if (player.start !== null) {
-                    clearInterval(player.interval);
-                    player.time += (Date.now() - player.start) / 1000;
-                    player.start = null;
-                    const playerDiv = document.getElementById(`player-${index}`);
-                    playerDiv.classList.remove('active');
-                    playerDiv.innerText = `${player.name} - Time: ${formatTime(player.time)}`;
-                }
+                positions.forEach(position => {
+                    if (player.intervals[position]) {
+                        clearInterval(player.intervals[position]);
+                        player.clocks[position] = (Date.now() - player.clocks[position]) / 1000;
+                        player.intervals[position] = null;
+                        const clockDiv = document.getElementById(`clock-${index}-${position}`);
+                        clockDiv.classList.remove('active');
+                        clockDiv.innerText = `${position}: ${formatTime(player.clocks[position])}`;
+                        activeClocks--;
+                    }
+                });
             });
+            updateActiveClocksCounter();
+        }
+
+        function updateActiveClocksCounter() {
+            activeClocksCount.innerText = activeClocks;
+            if (activeClocks === 9) {
+                activeClocksCount.style.color = 'green';
+            } else {
+                activeClocksCount.style.color = 'red';
+            }
         }
     </script>
 
