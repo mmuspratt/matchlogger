@@ -32,6 +32,7 @@
             cursor: pointer;
             margin-right: 10px;
             border: 1px solid #ccc;
+            font-weight: normal; /* Set regular font weight */
         }
         .clock.active {
             background-color: #a0d0a0;
@@ -40,13 +41,15 @@
             display: inline-block;
             padding: 10px;
             font-size: 16px;
-            font-weight: bold;
-            color: black;
             margin-left: 10px;
             background-color: white;
             border-radius: 5px;
             cursor: pointer;
             border: 1px solid #ccc;
+            font-weight: normal; /* Set regular font weight */
+        }
+        .plus-minus {
+            background-color: #add8e6; /* Light blue background for plus-minus */
         }
         #export-button, #stop-all-button, #reset-button, #reset-score-button {
             margin-top: 20px;
@@ -118,7 +121,7 @@
         <!-- Players will be added here dynamically -->
     </div>
 
-    <button id="export-button" onclick="exportTimes()">Export Times</button>
+    <button id="export-button" onclick="exportTimes()">Export Data</button>
     <button id="stop-all-button" onclick="stopAllClocks()">Stop All Clocks</button>
     <button id="reset-button" onclick="resetClocks()">Reset Clocks</button>
 
@@ -177,7 +180,7 @@
             const plusMinusDiv = document.createElement('div');
             plusMinusDiv.className = 'plus-minus';
             plusMinusDiv.id = `plus-minus-${index}`;
-            plusMinusDiv.innerText = `+/-: 0`;
+            plusMinusDiv.innerText = `${player.plusMinus}`;
             playerRow.appendChild(plusMinusDiv);
 
             const goalDiv = document.createElement('div');
@@ -332,7 +335,7 @@
                 if (hasActiveClock) {
                     player.plusMinus += value;
                     const plusMinusDiv = document.getElementById(`plus-minus-${index}`);
-                    plusMinusDiv.innerText = `+/-: ${player.plusMinus}`;
+                    plusMinusDiv.innerText = `${player.plusMinus}`;
                 }
             });
         }
@@ -360,7 +363,7 @@
                 player.goals = 0;
                 player.assists = 0;
                 const plusMinusDiv = document.getElementById(`plus-minus-${index}`);
-                plusMinusDiv.innerText = `+/-: 0`;
+                plusMinusDiv.innerText = `0`;
                 const goalDiv = document.getElementById(`goal-${index}`);
                 goalDiv.innerText = `G: 0`;
                 const assistDiv = document.getElementById(`assist-${index}`);
