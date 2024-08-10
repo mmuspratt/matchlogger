@@ -12,7 +12,7 @@
         }
         .player {
             margin: 10px 0;
-            padding: 10px;
+            padding: 5px; /* Reduced padding */
             background-color: #f0f0f0;
             border-radius: 5px;
         }
@@ -26,30 +26,39 @@
         }
         .clock {
             display: inline-block;
-            padding: 10px;
+            padding: 5px; /* Reduced padding */
             background-color: white;
             border-radius: 5px;
             cursor: pointer;
             margin-right: 10px;
             border: 1px solid #ccc;
-            font-weight: normal; /* Set regular font weight */
+            font-weight: normal;
         }
         .clock.active {
             background-color: #a0d0a0;
         }
-        .goal-assist, .plus-minus {
+        .goal-assist {
             display: inline-block;
-            padding: 10px;
+            padding: 5px; /* Reduced padding */
             font-size: 16px;
             margin-left: 10px;
-            background-color: white;
+            background-color: black; /* Changed to black */
+            color: white; /* Changed to white font */
             border-radius: 5px;
             cursor: pointer;
             border: 1px solid #ccc;
-            font-weight: normal; /* Set regular font weight */
+            font-weight: normal;
         }
         .plus-minus {
+            display: inline-block;
+            padding: 5px; /* Reduced padding */
+            font-size: 16px;
+            margin-left: 10px;
             background-color: #add8e6; /* Light blue background for plus-minus */
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
+            font-weight: normal;
         }
         #export-button, #stop-all-button, #reset-button, #reset-score-button {
             margin-top: 20px;
