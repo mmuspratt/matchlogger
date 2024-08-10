@@ -97,7 +97,7 @@
             margin-left: 20px;
         }
         .score-button {
-            padding: 10px 20px;
+            padding: 5px 10px; /* Reduced padding */
             font-size: 16px;
             font-weight: bold;
             color: white;
@@ -140,19 +140,19 @@
     <script>
         const positions = ['GK', 'D', 'M', 'F'];
         const players = [
-            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
-            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 }
+            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0, T: 0 }, intervals: {}, totalInterval: null, plusMinus: 0, goals: 0, assists: 0 }
         ];
 
         let activeClocks = 0;
@@ -185,6 +185,13 @@
                 clockDiv.addEventListener('click', () => toggleTimer(index, position));
                 playerRow.appendChild(clockDiv);
             });
+
+            const totalClockDiv = document.createElement('div');
+            totalClockDiv.className = 'clock';
+            totalClockDiv.id = `clock-${index}-T`;
+            totalClockDiv.innerText = `T: 00:00`;
+            totalClockDiv.style.backgroundColor = '#add8e6'; // Set background color to light blue
+            playerRow.appendChild(totalClockDiv);
 
             const plusMinusDiv = document.createElement('div');
             plusMinusDiv.className = 'plus-minus';
@@ -219,6 +226,10 @@
                 player.clocks[position] = Date.now();
                 clockDiv.classList.add('active');
                 activeClocks++;
+
+                if (position !== 'GK' && !player.totalInterval) {
+                    player.totalInterval = setInterval(() => updateTotalTime(playerIndex), 100);
+                }
             } else {
                 // Stop the timer
                 clearInterval(player.intervals[position]);
@@ -227,6 +238,11 @@
                 clockDiv.classList.remove('active');
                 clockDiv.innerText = `${position}: ${formatTime(player.clocks[position])}`;
                 activeClocks--;
+
+                if (position !== 'GK' && !isAnyFieldClockActive(player)) {
+                    clearInterval(player.totalInterval);
+                    player.totalInterval = null;
+                }
             }
             updateActiveClocksCounter();
         }
@@ -243,6 +259,17 @@
             clockDiv.innerText = `${position}: ${formatTime(elapsedTime)}`;
         }
 
+        function updateTotalTime(playerIndex) {
+            const player = players[playerIndex];
+            const totalClockDiv = document.getElementById(`clock-${playerIndex}-T`);
+            player.clocks.T += 0.1; // Increment by 0.1 second (100ms)
+            totalClockDiv.innerText = `T: ${formatTime(player.clocks.T)}`;
+        }
+
+        function isAnyFieldClockActive(player) {
+            return ['D', 'M', 'F'].some(position => player.intervals[position]);
+        }
+
         function formatTime(seconds) {
             const minutes = Math.floor(seconds / 60);
             const remainingSeconds = Math.floor(seconds % 60);
@@ -255,17 +282,18 @@
 
         function exportTimes() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Player,GK Time,D Time,M Time,F Time,Plus-Minus,Goals,Assists\n";
+            csvContent += "Player,GK Time,D Time,M Time,F Time,T Time,Plus-Minus,Goals,Assists\n";
 
             players.forEach(player => {
                 const gkTime = timeInDecimalMinutes(player.clocks.GK);
                 const dTime = timeInDecimalMinutes(player.clocks.D);
                 const mTime = timeInDecimalMinutes(player.clocks.M);
                 const fTime = timeInDecimalMinutes(player.clocks.F);
+                const tTime = timeInDecimalMinutes(player.clocks.T);
                 const plusMinus = player.plusMinus;
                 const goals = player.goals;
                 const assists = player.assists;
-                csvContent += `${player.name},${gkTime},${dTime},${mTime},${fTime},${plusMinus},${goals},${assists}\n`;
+                csvContent += `${player.name},${gkTime},${dTime},${mTime},${fTime},${tTime},${plusMinus},${goals},${assists}\n`;
             });
 
             const now = new Date();
@@ -295,6 +323,11 @@
                     clockDiv.innerText = `${position}: 00:00`;
                     clockDiv.classList.remove('active');
                 });
+                clearInterval(player.totalInterval);
+                player.clocks.T = 0;
+                player.totalInterval = null;
+                const totalClockDiv = document.getElementById(`clock-${index}-T`);
+                totalClockDiv.innerText = `T: 00:00`;
             });
             activeClocks = 0;
             updateActiveClocksCounter();
@@ -313,6 +346,10 @@
                         activeClocks--;
                     }
                 });
+                if (player.totalInterval) {
+                    clearInterval(player.totalInterval);
+                    player.totalInterval = null;
+                }
             });
             updateActiveClocksCounter();
         }
