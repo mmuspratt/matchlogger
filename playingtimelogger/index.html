@@ -223,7 +223,7 @@
             if (!player.intervals[position]) {
                 // Start the timer
                 player.intervals[position] = setInterval(() => updateDisplay(playerIndex, position), 100);
-                player.clocks[position] = Date.now();
+                player.clocks[position] = Date.now() - (player.clocks[position] * 1000); // Subtract the already elapsed time
                 clockDiv.classList.add('active');
                 activeClocks++;
 
@@ -234,7 +234,7 @@
                 // Stop the timer
                 clearInterval(player.intervals[position]);
                 player.intervals[position] = null;
-                player.clocks[position] = (Date.now() - player.clocks[position]) / 1000;
+                player.clocks[position] = (Date.now() - player.clocks[position]) / 1000; // Calculate elapsed time in seconds
                 clockDiv.classList.remove('active');
                 clockDiv.innerText = `${position}: ${formatTime(player.clocks[position])}`;
                 activeClocks--;
