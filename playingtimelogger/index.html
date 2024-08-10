@@ -1,0 +1,163 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PlayingTimeLogger</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            text-align: center;
+            margin-top: 50px;
+        }
+        .player {
+            margin: 10px 0;
+            padding: 10px;
+            background-color: #f0f0f0;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        .player.active {
+            background-color: #a0d0a0;
+        }
+        #export-button, #reset-button, #stop-all-button {
+            margin-top: 20px;
+            padding: 10px 20px;
+            background-color: #007BFF;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            font-size: 16px;
+            margin-right: 10px;
+        }
+        #reset-button {
+            background-color: #DC3545;
+        }
+        #stop-all-button {
+            background-color: #FFC107;
+        }
+    </style>
+</head>
+<body>
+
+    <h1>PlayingTimeLogger</h1>
+
+    <div id="players">
+        <!-- Players will be added here dynamically -->
+    </div>
+
+    <button id="export-button" onclick="exportTimes()">Export Times</button>
+    <button id="stop-all-button" onclick="stopAllClocks()">Stop All Clocks</button>
+    <button id="reset-button" onclick="resetClocks()">Reset Clocks</button>
+
+    <script>
+        const players = [
+            { name: 'Charlie', time: 0, start: null, interval: null },
+            { name: 'Colby', time: 0, start: null, interval: null },
+            { name: 'Davin', time: 0, start: null, interval: null },
+            { name: 'Elliot', time: 0, start: null, interval: null },
+            { name: 'Emory', time: 0, start: null, interval: null },
+            { name: 'Eske', time: 0, start: null, interval: null },
+            { name: 'Finn', time: 0, start: null, interval: null },
+            { name: 'Ivar', time: 0, start: null, interval: null },
+            { name: 'Leo', time: 0, start: null, interval: null },
+            { name: 'Lucas', time: 0, start: null, interval: null },
+            { name: 'Matthew', time: 0, start: null, interval: null },
+            { name: 'Noah', time: 0, start: null, interval: null },
+            { name: 'Weston', time: 0, start: null, interval: null }
+        ];
+
+        const container = document.getElementById('players');
+
+        players.forEach((player, index) => {
+            const playerDiv = document.createElement('div');
+            playerDiv.className = 'player';
+            playerDiv.id = `player-${index}`;
+            playerDiv.innerText = `${player.name} - Time: 00:00`;
+            playerDiv.addEventListener('click', () => toggleTimer(index));
+            container.appendChild(playerDiv);
+        });
+
+        function toggleTimer(index) {
+            const player = players[index];
+            const playerDiv = document.getElementById(`player-${index}`);
+
+            if (player.start === null) {
+                // Start the timer
+                player.start = Date.now();
+                playerDiv.classList.add('active');
+                player.interval = setInterval(() => updateDisplay(index), 100);
+            } else {
+                // Stop the timer
+                clearInterval(player.interval);
+                player.time += (Date.now() - player.start) / 1000;
+                player.start = null;
+                playerDiv.classList.remove('active');
+                playerDiv.innerText = `${player.name} - Time: ${formatTime(player.time)}`;
+            }
+        }
+
+        function updateDisplay(index) {
+            const player = players[index];
+            const playerDiv = document.getElementById(`player-${index}`);
+            let elapsedTime = player.time;
+
+            if (player.start !== null) {
+                elapsedTime += (Date.now() - player.start) / 1000;
+            }
+
+            playerDiv.innerText = `${player.name} - Time: ${formatTime(elapsedTime)}`;
+        }
+
+        function formatTime(seconds) {
+            const minutes = Math.floor(seconds / 60);
+            const remainingSeconds = Math.floor(seconds % 60);
+            return `${String(minutes).padStart(2, '0')}:${String(remainingSeconds).padStart(2, '0')}`;
+        }
+
+        function exportTimes() {
+            let csvContent = "data:text/csv;charset=utf-8,";
+            csvContent += "Player,Time (MM:SS)\n";
+
+            players.forEach(player => {
+                csvContent += `${player.name},${formatTime(player.time)}\n`;
+            });
+
+            const encodedUri = encodeURI(csvContent);
+            const link = document.createElement("a");
+            link.setAttribute("href", encodedUri);
+            link.setAttribute("download", "player_times.csv");
+            document.body.appendChild(link); // Required for Firefox
+
+            link.click();
+            document.body.removeChild(link); // Clean up
+        }
+
+        function resetClocks() {
+            players.forEach((player, index) => {
+                clearInterval(player.interval);
+                player.time = 0;
+                player.start = null;
+                const playerDiv = document.getElementById(`player-${index}`);
+                playerDiv.innerText = `${player.name} - Time: 00:00`;
+                playerDiv.classList.remove('active');
+            });
+        }
+
+        function stopAllClocks() {
+            players.forEach((player, index) => {
+                if (player.start !== null) {
+                    clearInterval(player.interval);
+                    player.time += (Date.now() - player.start) / 1000;
+                    player.start = null;
+                    const playerDiv = document.getElementById(`player-${index}`);
+                    playerDiv.classList.remove('active');
+                    playerDiv.innerText = `${player.name} - Time: ${formatTime(player.time)}`;
+                }
+            });
+        }
+    </script>
+
+</body>
+</html>
