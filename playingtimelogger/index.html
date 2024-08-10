@@ -27,21 +27,26 @@
         .clock {
             display: inline-block;
             padding: 10px;
-            background-color: #e0e0e0;
+            background-color: white;
             border-radius: 5px;
             cursor: pointer;
             margin-right: 10px;
+            border: 1px solid #ccc;
         }
         .clock.active {
             background-color: #a0d0a0;
         }
-        .plus-minus {
+        .goal-assist, .plus-minus {
             display: inline-block;
             padding: 10px;
             font-size: 16px;
             font-weight: bold;
             color: black;
-            margin-left: 20px;
+            margin-left: 10px;
+            background-color: white;
+            border-radius: 5px;
+            cursor: pointer;
+            border: 1px solid #ccc;
         }
         #export-button, #stop-all-button, #reset-button, #reset-score-button {
             margin-top: 20px;
@@ -123,19 +128,19 @@
     <script>
         const positions = ['GK', 'D', 'M', 'F'];
         const players = [
-            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
-            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 }
+            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 },
+            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0, goals: 0, assists: 0 }
         ];
 
         let activeClocks = 0;
@@ -174,6 +179,20 @@
             plusMinusDiv.id = `plus-minus-${index}`;
             plusMinusDiv.innerText = `+/-: 0`;
             playerRow.appendChild(plusMinusDiv);
+
+            const goalDiv = document.createElement('div');
+            goalDiv.className = 'goal-assist';
+            goalDiv.id = `goal-${index}`;
+            goalDiv.innerText = `G: 0`;
+            goalDiv.addEventListener('click', () => incrementGoal(index));
+            playerRow.appendChild(goalDiv);
+
+            const assistDiv = document.createElement('div');
+            assistDiv.className = 'goal-assist';
+            assistDiv.id = `assist-${index}`;
+            assistDiv.innerText = `A: 0`;
+            assistDiv.addEventListener('click', () => incrementAssist(index));
+            playerRow.appendChild(assistDiv);
 
             container.appendChild(playerRow);
         });
@@ -224,7 +243,7 @@
 
         function exportTimes() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Player,GK Time,D Time,M Time,F Time,Plus-Minus\n";
+            csvContent += "Player,GK Time,D Time,M Time,F Time,Plus-Minus,Goals,Assists\n";
 
             players.forEach(player => {
                 const gkTime = timeInDecimalMinutes(player.clocks.GK);
@@ -232,7 +251,9 @@
                 const mTime = timeInDecimalMinutes(player.clocks.M);
                 const fTime = timeInDecimalMinutes(player.clocks.F);
                 const plusMinus = player.plusMinus;
-                csvContent += `${player.name},${gkTime},${dTime},${mTime},${fTime},${plusMinus}\n`;
+                const goals = player.goals;
+                const assists = player.assists;
+                csvContent += `${player.name},${gkTime},${dTime},${mTime},${fTime},${plusMinus},${goals},${assists}\n`;
             });
 
             const now = new Date();
@@ -316,6 +337,18 @@
             });
         }
 
+        function incrementGoal(index) {
+            players[index].goals++;
+            const goalDiv = document.getElementById(`goal-${index}`);
+            goalDiv.innerText = `G: ${players[index].goals}`;
+        }
+
+        function incrementAssist(index) {
+            players[index].assists++;
+            const assistDiv = document.getElementById(`assist-${index}`);
+            assistDiv.innerText = `A: ${players[index].assists}`;
+        }
+
         function resetScore() {
             gfCount = 0;
             gaCount = 0;
@@ -324,8 +357,14 @@
 
             players.forEach((player, index) => {
                 player.plusMinus = 0;
+                player.goals = 0;
+                player.assists = 0;
                 const plusMinusDiv = document.getElementById(`plus-minus-${index}`);
                 plusMinusDiv.innerText = `+/-: 0`;
+                const goalDiv = document.getElementById(`goal-${index}`);
+                goalDiv.innerText = `G: 0`;
+                const assistDiv = document.getElementById(`assist-${index}`);
+                assistDiv.innerText = `A: 0`;
             });
         }
     </script>
