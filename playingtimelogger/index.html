@@ -35,7 +35,15 @@
         .clock.active {
             background-color: #a0d0a0;
         }
-        #export-button, #stop-all-button, #reset-button {
+        .plus-minus {
+            display: inline-block;
+            padding: 10px;
+            font-size: 16px;
+            font-weight: bold;
+            color: black;
+            margin-left: 20px;
+        }
+        #export-button, #stop-all-button, #reset-button, #reset-score-button {
             margin-top: 20px;
             padding: 10px 20px;
             color: white;
@@ -55,6 +63,10 @@
             background-color: #FFC107;
             color: black;
         }
+        #reset-score-button {
+            background-color: #FFD700;
+            color: black;
+        }
         #active-clocks-counter {
             margin-bottom: 20px;
             font-size: 18px;
@@ -63,13 +75,39 @@
         #active-clocks-count {
             color: red;
         }
+        .scoreboard {
+            display: inline-block;
+            margin-left: 20px;
+        }
+        .score-button {
+            padding: 10px 20px;
+            font-size: 16px;
+            font-weight: bold;
+            color: white;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-right: 10px;
+        }
+        #gf-button {
+            background-color: green;
+        }
+        #ga-button {
+            background-color: red;
+        }
     </style>
 </head>
 <body>
 
     <h1>PlayingTimeLogger</h1>
 
-    <div id="active-clocks-counter">Active Clocks: <span id="active-clocks-count">0</span></div>
+    <div id="active-clocks-counter">
+        Active Clocks: <span id="active-clocks-count">0</span>
+        <div class="scoreboard">
+            <button id="gf-button" class="score-button" onclick="incrementGF()">GF: <span id="gf-count">0</span></button>
+            <button id="ga-button" class="score-button" onclick="incrementGA()">GA: <span id="ga-count">0</span></button>
+        </div>
+    </div>
 
     <div id="players">
         <!-- Players will be added here dynamically -->
@@ -79,27 +117,37 @@
     <button id="stop-all-button" onclick="stopAllClocks()">Stop All Clocks</button>
     <button id="reset-button" onclick="resetClocks()">Reset Clocks</button>
 
+    <!-- Reset Score Button -->
+    <button id="reset-score-button" onclick="resetScore()">Reset Score</button>
+
     <script>
         const positions = ['GK', 'D', 'M', 'F'];
         const players = [
-            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} },
-            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {} }
+            { name: 'Charlie', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Colby', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Davin', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Elliot', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Emory', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Eske', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Finn', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Ivar', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Leo', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Lucas', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Matthew', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Noah', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 },
+            { name: 'Weston', clocks: { GK: 0, D: 0, M: 0, F: 0 }, intervals: {}, plusMinus: 0 }
         ];
 
         let activeClocks = 0;
+        let gfCount = 0;
+        let gaCount = 0;
+
         const activeClocksCounter = document.getElementById('active-clocks-counter');
         const activeClocksCount = document.getElementById('active-clocks-count');
+        const gfButton = document.getElementById('gf-button');
+        const gaButton = document.getElementById('ga-button');
+        const gfDisplay = document.getElementById('gf-count');
+        const gaDisplay = document.getElementById('ga-count');
         const container = document.getElementById('players');
 
         players.forEach((player, index) => {
@@ -120,6 +168,12 @@
                 clockDiv.addEventListener('click', () => toggleTimer(index, position));
                 playerRow.appendChild(clockDiv);
             });
+
+            const plusMinusDiv = document.createElement('div');
+            plusMinusDiv.className = 'plus-minus';
+            plusMinusDiv.id = `plus-minus-${index}`;
+            plusMinusDiv.innerText = `+/-: 0`;
+            playerRow.appendChild(plusMinusDiv);
 
             container.appendChild(playerRow);
         });
@@ -170,14 +224,15 @@
 
         function exportTimes() {
             let csvContent = "data:text/csv;charset=utf-8,";
-            csvContent += "Player,Position,Time (MM:SS),Time (Minutes)\n";
+            csvContent += "Player,GK Time,D Time,M Time,F Time,Plus-Minus\n";
 
             players.forEach(player => {
-                positions.forEach(position => {
-                    const timeFormatted = formatTime(player.clocks[position]);
-                    const timeDecimal = timeInDecimalMinutes(player.clocks[position]);
-                    csvContent += `${player.name},${position},${timeFormatted},${timeDecimal}\n`;
-                });
+                const gkTime = timeInDecimalMinutes(player.clocks.GK);
+                const dTime = timeInDecimalMinutes(player.clocks.D);
+                const mTime = timeInDecimalMinutes(player.clocks.M);
+                const fTime = timeInDecimalMinutes(player.clocks.F);
+                const plusMinus = player.plusMinus;
+                csvContent += `${player.name},${gkTime},${dTime},${mTime},${fTime},${plusMinus}\n`;
             });
 
             const now = new Date();
@@ -236,6 +291,42 @@
             } else {
                 activeClocksCount.style.color = 'red';
             }
+        }
+
+        function incrementGF() {
+            gfCount++;
+            gfDisplay.innerText = gfCount;
+            updatePlusMinusCounters(1);
+        }
+
+        function incrementGA() {
+            gaCount++;
+            gaDisplay.innerText = gaCount;
+            updatePlusMinusCounters(-1);
+        }
+
+        function updatePlusMinusCounters(value) {
+            players.forEach((player, index) => {
+                const hasActiveClock = ['D', 'M', 'F'].some(pos => player.intervals[pos]);
+                if (hasActiveClock) {
+                    player.plusMinus += value;
+                    const plusMinusDiv = document.getElementById(`plus-minus-${index}`);
+                    plusMinusDiv.innerText = `+/-: ${player.plusMinus}`;
+                }
+            });
+        }
+
+        function resetScore() {
+            gfCount = 0;
+            gaCount = 0;
+            gfDisplay.innerText = gfCount;
+            gaDisplay.innerText = gaCount;
+
+            players.forEach((player, index) => {
+                player.plusMinus = 0;
+                const plusMinusDiv = document.getElementById(`plus-minus-${index}`);
+                plusMinusDiv.innerText = `+/-: 0`;
+            });
         }
     </script>
 
