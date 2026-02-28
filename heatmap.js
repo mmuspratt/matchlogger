@@ -17,8 +17,8 @@ function showHeatmap(events) {
 
     // Extract coordinates with jitter (±2m, matching Python script)
     const points = events.map(e => ({
-        x: e[0] + (Math.random() * 4 - 2),
-        y: e[1] + (Math.random() * 4 - 2)  // y_flipped: 0=bottom, 105=top
+        x: e.x + (Math.random() * 4 - 2),
+        y: e.y + (Math.random() * 4 - 2)  // y_flipped: 0=bottom, 105=top
     }));
 
     // KDE on a 68x105 grid (1 cell per meter)

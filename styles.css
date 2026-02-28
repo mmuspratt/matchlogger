@@ -28,11 +28,10 @@ body {
 /* Style the main heading of the app */
 h1 {
     color: darkslategray;
-    font-family: Arial, sans-serif;  /* Set the font to Arial */
-    font-size: 22px;                /* Smaller font size, adjust as needed */
-    font-weight: bold;              /* Make the font bold */
-    margin-bottom: 1px;            /* Less space below the heading */
-    padding: 0px 0;                 /* Reduced padding, adjust as needed */
+    font-size: 22px;
+    font-weight: bold;
+    margin-bottom: 1px;
+    padding: 0;
 }
 
 /* Style the container */
@@ -53,7 +52,6 @@ label[for="toggle-event-types"] {
     color: whitesmoke;
     font-family: Arial, sans-serif;
     font-size: 12px;
-    /*font-weight: bold; */
     cursor: pointer;
 }
 
