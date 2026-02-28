@@ -45,13 +45,6 @@ function handleButtonClick(button) {
     }, 100); // Remove the class after 100 milliseconds
 }
 
-function startLogging(logEventTypes) {
-  // Save the choice in localStorage or pass as a query parameter
-  localStorage.setItem('logEventTypes', logEventTypes);
-  // Redirect to logging page
-  window.location.href = 'logging.html';
-}
-
 function selectCategory(category) {
     const lastEvent = events[events.length - 1];
     if (lastEvent) {
