@@ -45,6 +45,14 @@ function handleButtonClick(button) {
     }, 100); // Remove the class after 100 milliseconds
 }
 
+function cancelEvent() {
+    events.pop();
+    const pitchElement = document.querySelector('.pitch');
+    const lastMarker = pitchElement.querySelector('.event-marker:last-child');
+    if (lastMarker) lastMarker.remove();
+    document.getElementById('categoryPopup').style.display = 'none';
+}
+
 function selectCategory(category) {
     const lastEvent = events[events.length - 1];
     if (lastEvent) {

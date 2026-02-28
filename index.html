@@ -30,7 +30,11 @@
         <button class="action-button-undo" onclick="undoLastEvent()">Undo event</button>
         
         <div class="category-popup" id="categoryPopup">
-            
+
+            <div class="button-row">
+                <button class="cancel-button" onclick="cancelEvent()">Cancel</button>
+            </div>
+
             <div class="button-row">
                 <div class="row-heading">FIRST TOUCH</div>
                 <button class="positive button-large" onclick="selectCategory('Control'); handleButtonClick(this)">Control</button>
