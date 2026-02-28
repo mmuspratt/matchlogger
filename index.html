@@ -25,9 +25,12 @@
             <!-- Displayed markers will be dynamically added here -->
         </div>
         
-        <button class="action-button-reset" onclick="resetEvents()">Reset log</button>
-        <button class="action-button-export" onclick="exportEvents()">Export data</button>
-        <button class="action-button-undo" onclick="undoLastEvent()">Undo event</button>
+        <div class="action-buttons">
+            <button class="action-button-reset" onclick="resetEvents()">Reset log</button>
+            <button class="action-button-export" onclick="exportEvents()">Export data</button>
+            <button class="action-button-heatmap" onclick="viewHeatmap()">View heatmap</button>
+            <button class="action-button-undo" onclick="undoLastEvent()">Undo event</button>
+        </div>
         
         <div class="category-popup" id="categoryPopup">
 
@@ -103,7 +106,16 @@
 
     </div>
 
+    <!-- Heatmap modal -->
+    <div class="heatmap-modal" id="heatmapModal" onclick="closeHeatmap()">
+        <div class="heatmap-modal-content" onclick="event.stopPropagation()">
+            <button class="heatmap-close-btn" onclick="closeHeatmap()">✕</button>
+            <canvas id="heatmapCanvas"></canvas>
+        </div>
+    </div>
+
     <script src="script.js"></script>
+    <script src="heatmap.js"></script>
 </body>
 
 </html>

@@ -112,6 +112,10 @@ function undoLastEvent() {
     }
 }
 
+function viewHeatmap() {
+    showHeatmap(events);
+}
+
 function resetEvents() {
     events = [];
     const markers = document.querySelectorAll('.event-marker');
