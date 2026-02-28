@@ -83,7 +83,7 @@ function exportEvents() {
     let url = URL.createObjectURL(blob);
     link.setAttribute("href", url);
     let timestamp = new Date().toISOString().slice(0,19).replace("T", "_").replace(/:/g, "-");
-    link.setAttribute("download", `match_log_${timestamp}_utc.csv`);
+    link.setAttribute("download", `matchlogger_log_${timestamp}_utc.csv`);
     link.style.visibility = 'hidden';
     document.body.appendChild(link);
     link.click();
